@@ -48,9 +48,9 @@ contract Arthurium {
         uint256 fromBalance = _balances[msg.sender];
         require(fromBalance >= _value, "insufficient balance");
 
-    unchecked {
-        _balances[msg.sender] = fromBalance - _value;
-    }
+        unchecked {
+            _balances[msg.sender] = fromBalance - _value;
+        }
 
         _balances[_to] += _value;
 
@@ -67,18 +67,18 @@ contract Arthurium {
         uint256 allow = allowance(_from, msg.sender);
         if (allow != type(uint256).max) {
             require(allow >= _value, "insufficient allowance");
-        unchecked {
-            _allowances[_from][msg.sender] = allow - _value;
-            emit Approval(_from, msg.sender, allow - _value);
-        }
+            unchecked {
+                _allowances[_from][msg.sender] = allow - _value;
+                emit Approval(_from, msg.sender, allow - _value);
+            }
         }
 
         uint256 fromBalance = _balances[_from];
         require(fromBalance >= _value, "insufficient balance");
 
-    unchecked {
-        _balances[_from] = fromBalance - _value;
-    }
+        unchecked {
+            _balances[_from] = fromBalance - _value;
+        }
 
         _balances[_to] += _value;
 

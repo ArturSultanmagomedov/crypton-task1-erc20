@@ -6,7 +6,7 @@ import {solidity} from "ethereum-waffle";
 
 chai.use(solidity);
 
-describe("additional funs", async () => {
+describe("public view funs", async () => {
   let contract: Contract;
   let owner: SignerWithAddress;
   let user: SignerWithAddress;
@@ -19,21 +19,25 @@ describe("additional funs", async () => {
     await contract.deployed();
   });
 
-  // it("TEST mint", async () => {
-  //   expect(`${await contract.totalSupply()}`).to.equal("10000000");
-  //
-  //   await contract.mint(owner.address, 1);
-  //   expect(`${await contract.totalSupply()}`).to.equal("10000001");
-  //
-  //   expect(contract.mint(user.address, 1)).to.be.revertedWith("not an owner");
-  // });
+  it("TEST name", async () => {
+    expect(`${await contract.name()}`).to.equal("Arthurium");
+  });
 
-  it("TEST burn", async () => {
+  it("TEST symbol", async () => {
+    expect(`${await contract.symbol()}`).to.equal("ATM");
+  });
+
+  it("TEST decimals", async () => {
+    expect(`${await contract.decimals()}`).to.equal("18");
+  });
+
+  it("TEST totalSupply", async () => {
     expect(`${await contract.totalSupply()}`).to.equal("10000000");
+  });
 
-    await contract.burn(owner.address, 1_000_000);
-    expect(`${await contract.totalSupply()}`).to.equal("9000000");
+  it("TEST balanceOf", async () => {
+    await contract.connect(owner).transfer(user.address, 100);
 
-    expect(contract.burn(user.address, 1)).to.be.revertedWith("not an owner");
+    expect(`${await contract.balanceOf(user.address)}`).to.equal("100");
   });
 });
