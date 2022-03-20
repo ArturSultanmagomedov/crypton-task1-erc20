@@ -1,4 +1,11 @@
 .idea
+.eslintignore
+.eslintrc.js
+.npmignore
+.prettierignore
+.prettierrc
+.solhint.json
+.solhintignore
 
 node_modules
 .env

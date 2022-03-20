@@ -23,29 +23,29 @@ describe("public funs", async () => {
   it("TEST transfer", async () => {
     const tx = await contract.connect(owner).transfer(user.address, 1);
 
-    // expect(tx).to.be.emit(await contract, "Transfer");
+    await expect(tx).to.emit(contract, "Transfer").withArgs(owner.address, user.address, 1);
     expect(`${await contract.balanceOf(owner.address)}`).to.equal("9999999");
     expect(`${await contract.balanceOf(user.address)}`).to.equal("1");
   });
 
-  it("Test transferFrom", async function () {
+  it("Test transferFrom", async () => {
     await contract.connect(owner).approve(user.address, 100);
     const tx = await contract.connect(user).transferFrom(owner.address, user2.address, 1);
 
-    expect(tx).to.be.emit(await contract, "Transfer");
+    await expect(tx).to.emit(contract, "Transfer").withArgs(owner.address, user2.address, 1);
     expect(`${await contract.balanceOf(owner.address)}`).to.equal("9999999");
     expect(`${await contract.balanceOf(user2.address)}`).to.equal("1");
     expect(`${await contract.allowance(owner.address, user.address)}`).to.equal("99");
   });
 
-  it("Test approve", async function () {
+  it("Test approve", async () => {
     const tx = await contract.connect(owner).approve(user.address, 10);
 
-    await expect(tx).to.be.emit(contract, "Approval");
+    await expect(tx).to.emit(contract, "Approval").withArgs(owner.address, user.address, 10);
     expect(`${await contract.allowance(owner.address, user.address)}`).to.equal("10");
   });
 
-  it("Test allowance", async function () {
+  it("Test allowance", async () => {
     // овнер дает юзеру права на 10 монет
     await contract.connect(owner).approve(user.address, 10);
     // юзер переводит 1 монету овнера себе
