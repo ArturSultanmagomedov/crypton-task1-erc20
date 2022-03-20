@@ -21,9 +21,7 @@ describe("public funs", async () => {
   });
 
   it("TEST transfer", async () => {
-    const tx = await contract.connect(owner).transfer(user.address, 1);
-
-    await expect(tx).to.emit(contract, "Transfer").withArgs(owner.address, user.address, 1);
+    await expect(contract.connect(owner).transfer(user.address, 1)).to.emit(contract, "Transfer").withArgs(owner.address, user.address, 1);
     expect(`${await contract.balanceOf(owner.address)}`).to.equal("9999999");
     expect(`${await contract.balanceOf(user.address)}`).to.equal("1");
   });
